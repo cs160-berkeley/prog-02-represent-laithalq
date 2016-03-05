@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="location_button_text">Use my Location</string>
+    <string name="zipcode_button_text">Use my Zip Code</string>
+    <string name="find_your_reps_label">Find your representatives by</string>
+</resources>

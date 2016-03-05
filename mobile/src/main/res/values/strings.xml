@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Represent</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="location_button_text">Use my Location</string>
+    <string name="zipcode_button_text">Use my Zip Code</string>
+    <string name="hint_zipcode">Zip Code</string>
+    <string name="find_your_reps_label">Find your representatives by</string>
+</resources>
