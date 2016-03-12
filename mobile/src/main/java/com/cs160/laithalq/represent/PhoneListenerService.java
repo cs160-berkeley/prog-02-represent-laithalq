@@ -18,8 +18,9 @@ import java.nio.charset.StandardCharsets;
  */
 public class PhoneListenerService extends WearableListenerService {
 
-//   WearableListenerServices don't need an iBinder or an onStartCommand: they just need an onMessageReceieved.
-private static final String TOAST = "/send_toast";
+    //   WearableListenerServices don't need an iBinder or an onStartCommand: they just need an onMessageReceieved.
+    private static final String TOAST = "/send_toast";
+    private static final String DETAIL = "/goto_candidate_detail";
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
@@ -41,7 +42,20 @@ private static final String TOAST = "/send_toast";
             // replace sending a toast with, like, starting a new activity or something.
             // who said skeleton code is untouchable? #breakCSconceptions
 
-        } else {
+        }
+        else if( messageEvent.getPath().equalsIgnoreCase(DETAIL) ) {
+
+            // Value contains the String we sent over in WatchToPhoneService, "good job"
+            String value = new String(messageEvent.getData(), StandardCharsets.UTF_8);
+            Log.d("T", "message: " + value);
+            Intent candidateDetailIntent = new Intent(this, CandidateDetailActivity.class);
+            candidateDetailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            candidateDetailIntent.putExtra("Candidate Name", value);
+            candidateDetailIntent.putExtra("Party Name", "Democrat");
+            candidateDetailIntent.putExtra("Candidate Image Id", R.mipmap.hillary);
+            startActivity(candidateDetailIntent);
+        }
+        else {
             super.onMessageReceived( messageEvent );
         }
 

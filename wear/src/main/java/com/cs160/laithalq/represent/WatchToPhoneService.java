@@ -55,15 +55,15 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
         // Which cat do we want to feed? Grab this info from INTENT
         // which was passed over when we called startService
         if (intent != null) {
-            candidateName = intent.getStringExtra("Detail Candidate Name");
+            candidateName = intent.getStringExtra("ChosenCandidate");
         }
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
 
     @Override
     public IBinder onBind(Intent intent) {
-        candidateName = intent.getStringExtra("Detail Candidate Name");
+        candidateName = intent.getStringExtra("ChosenCandidate");
         return null;
     }
 
@@ -77,6 +77,7 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
                     public void onResult(NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
                         nodes = getConnectedNodesResult.getNodes();
                         Log.d("T", "found nodes");
+                        Log.d("T", "sending from watch: " + candidateName);
                         //when we find a connected node, we populate the list declared above
                         //finally, we can send a message
                         sendMessage("/goto_candidate_detail", candidateName);
@@ -86,7 +87,9 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
     }
 
     @Override //we need this to implement GoogleApiClient.ConnectionsCallback
-    public void onConnectionSuspended(int i) {}
+    public void onConnectionSuspended(int i) {
+
+    }
 
     private void sendMessage(final String path, final String text ) {
         for (Node node : nodes) {

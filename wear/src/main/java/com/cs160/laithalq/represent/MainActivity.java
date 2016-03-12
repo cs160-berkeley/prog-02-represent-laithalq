@@ -3,6 +3,7 @@ package com.cs160.laithalq.represent;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ public class MainActivity extends Activity {
         Bundle extras = intent.getExtras();
 
         if (extras != null) {
-            String candidateName = extras.getString("Candidate Name");
+            String candidateName = extras.getString("Candidates");
             mFeedBtn.setText(candidateName);
         }
 
@@ -31,7 +32,8 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent(getBaseContext(), WatchToPhoneService.class);
-                sendIntent.putExtra("Detail Candidate Name", mFeedBtn.getText().toString());
+                Log.d("T", "in MainActivity, sending to phone: " + mFeedBtn.getText().toString());
+                sendIntent.putExtra("ChosenCandidate", mFeedBtn.getText().toString());
                 startService(sendIntent);
             }
         });
